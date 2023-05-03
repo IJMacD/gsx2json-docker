@@ -1,4 +1,4 @@
-var gauthkey = 'ENTER API KEY HERE'; // https://developers.google.com/sheets/api/guides/authorizing#APIKey
+var gauthkey = process.env.GOOGLE_API_KEY; // https://developers.google.com/sheets/api/guides/authorizing#APIKey
 var request = require('request');
 
 module.exports = function (req, res, next) {
@@ -71,9 +71,9 @@ module.exports = function (req, res, next) {
                         responseObj['rows'] = rows;
                     }
                     return res.status(200).json(responseObj);
-                } else {     
+                } else {
                     var data = JSON.parse(response.body);
-                    return res.status(response.statusCode).json(data.error);    
+                    return res.status(response.statusCode).json(data.error);
                 }
             } else {
                 var data = JSON.parse(response.body);

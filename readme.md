@@ -1,22 +1,21 @@
-# GSX2JSON - Google Spreadsheet to JSON API service.
+# [Docker] GSX2JSON - Google Spreadsheet to JSON API service.
 
 ## About
 
-One useful feature of Google Spreadsheets is the ability to access the data as JSON by using a particular feed URL. However, this is a bit fiddly to do, and the resulting JSON is pretty unreadable, with usable data buried deep inside objects.
+This is a dockerized version of https://github.com/55sketch/gsx2json
 
-This API connects to your spreadsheet and santizes the data, providing simple, readable JSON for you to use in your app.
 
 ## Install
 
-- Get [Google API key](https://developers.google.com/sheets/api/guides/authorizing#APIKey) and add to api.js (line 1).
+- Get [Google API key](https://developers.google.com/sheets/api/guides/authorizing#APIKey)
 - You must also enable the Google Sheets API and set up a service account.
 - Make sure your Google Sheet is set to be shared to 'anyone with the link'.
-- Run `npm install`.
-- Run `node app`.
+- Run `docker build --pull --rm -f "Dockerfile" -t gsx2json:latest "."`
+- Run `docker run --name gsx2json --restart unless-stopped -d -e GOOGLE_API_KEY=APIKEYZZZZZZZZZ -p 5000:5000 gsx2json:latest`
 
 ## Usage
 
-First, you must make sure your Google Sheet is set to be shared to 'anyone with the link'. 
+First, you must make sure your Google Sheet is set to be shared to 'anyone with the link'.
 
 You can then access your readable JSON API using the `/api` endpoint. You can change this in app.js.
 
@@ -32,7 +31,7 @@ This will update live with changes to the spreadsheet.
 
 **id (required):** The ID of your document. This is the big long aplha-numeric code in the middle of your document URL.
 
-**sheet (required):** The name of the individual sheet you want to get data from. 
+**sheet (required):** The name of the individual sheet you want to get data from.
 
 **q (optional):** A simple query string. This is case insensitive and will add any row containing the string in any cell to the filtered result.
 
