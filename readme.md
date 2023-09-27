@@ -7,8 +7,8 @@ This is a dockerized version of https://github.com/55sketch/gsx2json
 
 ## Install
 
-- Get [Google API key](https://developers.google.com/sheets/api/guides/authorizing#APIKey)
-- You must also enable the Google Sheets API and set up a service account.
+- In Google Cloud Console enable [Sheets API](https://console.cloud.google.com/apis/library/sheets.googleapis.com)
+- Add [API Key](https://console.cloud.google.com/apis/credentials). (Optionally restrict to just Sheets API)
 - Make sure your Google Sheet is set to be shared to 'anyone with the link'.
 - Run `docker build --pull --rm -f "Dockerfile" -t gsx2json:latest "."`
 - Run `docker run --name gsx2json --restart unless-stopped -d -e GOOGLE_API_KEY=APIKEYZZZZZZZZZ -p 5000:5000 gsx2json:latest`
@@ -26,8 +26,6 @@ http://example.com/api?id=SPREADSHEET_ID&sheet=SHEET_NAME
 This will update live with changes to the spreadsheet.
 
 ### Parameters
-
-**api_key (required):** The API key set up in your Google developer account. You must also enable the Google Sheets API and set up a service account.
 
 **id (required):** The ID of your document. This is the big long aplha-numeric code in the middle of your document URL.
 
