@@ -1,0 +1,8 @@
+
+Congratulations,
+
+Your application is now deployed. This may take a while to be up and responding.
+
+{{ if .Values.web.ingress.enabled -}}
+You should be able to access it at {{ ternary "https" "http" .Values.web.ingress.tls.enabled }}://{{ .Values.web.ingress.hostname }}{{ .Values.web.ingress.path | default "/" }} shortly.
+{{ end }}

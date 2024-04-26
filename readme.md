@@ -4,14 +4,21 @@
 
 This is a dockerized version of https://github.com/55sketch/gsx2json
 
-
-## Install
+## Container Install
 
 - In Google Cloud Console enable [Sheets API](https://console.cloud.google.com/apis/library/sheets.googleapis.com)
 - Add [API Key](https://console.cloud.google.com/apis/credentials). (Optionally restrict to just Sheets API)
 - Make sure your Google Sheet is set to be shared to 'anyone with the link'.
 - Run `docker build --pull --rm -f "Dockerfile" -t gsx2json:latest "."`
 - Run `docker run --name gsx2json --restart unless-stopped -d -e GOOGLE_API_KEY=APIKEYZZZZZZZZZ -p 5000:5000 gsx2json:latest`
+
+## Chart Install
+
+```
+git clone https://github.com/IJMacD/gsx2json-docker.git
+cd gsx2json-docker
+helm install my-release ./kube/chart/gsx2json --set web.ingress.hostname=gsx2json.example.org
+```
 
 ## Usage
 

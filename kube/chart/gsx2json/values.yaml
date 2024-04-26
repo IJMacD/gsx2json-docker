@@ -1,0 +1,13 @@
+web:
+  replicaCount: 1
+  local:
+    enabled: false
+  repository:
+    image: ijmacd/gsx2json
+    tag: "1.0.0"
+  ingress:
+    enabled: true
+    hostname: gsx2json.example.com
+    tls:
+      enabled: true
+      certIssuer: letsencrypt-production

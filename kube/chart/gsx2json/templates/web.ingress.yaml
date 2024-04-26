@@ -1,0 +1,29 @@
+{{ if .Values.web.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: '{{ .Release.Name }}-web'
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "false"
+    {{ if .Values.web.ingress.tls.certIssuer }}
+    cert-manager.io/cluster-issuer: {{ .Values.web.ingress.tls.certIssuer }}
+    {{ end }}
+spec:
+  rules:
+  - host: '{{ .Values.web.ingress.hostname }}'
+    http:
+      paths:
+      - path: '{{ .Values.web.ingress.path | default "/" }}'
+        pathType: Prefix
+        backend:
+          service:
+            name: '{{ .Release.Name }}-web'
+            port:
+              name: http
+  {{ if .Values.web.ingress.tls.enabled }}
+  tls:
+  - secretName: cert
+    hosts:
+    - '{{ .Values.web.ingress.hostname }}'
+  {{ end }}
+{{ end }}

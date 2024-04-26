@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: '{{ .Release.Name }}-web'
+  labels:
+    app.kubernetes.io/component: web
+    app.kubernetes.io/project: '{{ .Chart.Name }}'
+    app.kubernetes.io/release: '{{ .Release.Name }}'
+spec:
+  replicas: {{ .Values.web.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: web
+      app.kubernetes.io/release: '{{ .Release.Name }}'
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: web
+        app.kubernetes.io/release: '{{ .Release.Name }}'
+    spec:
+      containers:
+        - name: web
+          image: '{{ .Values.web.repository.image }}{{ if ne .Values.web.repository.tag "" }}:{{ .Values.web.repository.tag }}{{ end }}'
+          imagePullPolicy: Always
+          ports:
+            - name: web
+              containerPort: 5000
+          envFrom:
+            - secretRef:
+                name: google-secrets
+      {{ if not .Values.web.local.enabled }}
+      imagePullSecrets:
+      - name: regcred
+      {{ end }}
