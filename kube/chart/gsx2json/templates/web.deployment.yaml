@@ -28,6 +28,12 @@ spec:
           envFrom:
             - secretRef:
                 name: google-secrets
+          resources:
+            requests:
+              cpu: 10m
+              memory: 100Mi
+            limits:
+              memory: 100Mi
       {{ if not .Values.web.local.enabled }}
       imagePullSecrets:
       - name: regcred
